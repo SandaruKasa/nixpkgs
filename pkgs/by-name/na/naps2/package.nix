@@ -1,6 +1,5 @@
 {
   lib,
-  stdenv,
   buildDotnetModule,
   dotnetCorePackages,
   fetchFromGitHub,
@@ -14,32 +13,27 @@
 
 buildDotnetModule rec {
   pname = "naps2";
-  version = "7.5.3";
+  version = "8.2.0";
 
   src = fetchFromGitHub {
     owner = "cyanfish";
     repo = "naps2";
     tag = "v${version}";
-    hash = "sha256-vX+ZyCQsYqJjgYaufWJRnzX8retiFK5QHSP40bbBaCc=";
+    hash = "sha256-wqal8kOSlT2ZfUeqHwsxU8SzWQVeuq52VghSFeZHesk=";
   };
 
   projectFile = "NAPS2.App.Gtk/NAPS2.App.Gtk.csproj";
   nugetDeps = ./deps.json;
 
-  postPatch = ''
-    substituteInPlace NAPS2.Images.Gtk/NAPS2.Images.Gtk.csproj \
-      --replace-fail TargetFramework TargetFrameworks \
-  '';
-
   dotnetFlags = [
-    "-p:TargetFrameworks=net8"
+    "-p:TargetFrameworks=net9"
     "-p:EnablePreviewFeatures=true"
   ];
 
   executables = [ "naps2" ];
 
-  dotnet-sdk = dotnetCorePackages.sdk_8_0;
-  dotnet-runtime = dotnetCorePackages.runtime_8_0;
+  dotnet-sdk = dotnetCorePackages.sdk_9_0;
+  dotnet-runtime = dotnetCorePackages.runtime_9_0;
 
   nativeBuildInputs = [ wrapGAppsHook3 ];
 
