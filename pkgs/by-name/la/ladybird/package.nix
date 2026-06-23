@@ -55,6 +55,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-+CVJjrL1kqT2A7r89F+riiHpMa39rcggqG9SByidUY4=";
   };
 
+  strictDeps = true;
+  __structuredAttrs = true;
+
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit (finalAttrs) src;
     hash = "sha256-n0ACVH8NXwe7SIaGFoJ20WIGGR3XjcuLTwPSKGJpT5s=";
@@ -104,7 +107,6 @@ stdenv.mkDerivation (finalAttrs: {
     rustPlatform.cargoSetupHook
     rustc
     qt6Packages.wrapQtAppsHook
-    libtommath
   ];
 
   buildInputs = [
@@ -117,6 +119,7 @@ stdenv.mkDerivation (finalAttrs: {
     angle # libEGL
     libjxl
     libedit
+    libtommath
     libwebp
     libxcrypt
     mimalloc
