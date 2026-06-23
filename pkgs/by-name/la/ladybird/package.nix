@@ -58,6 +58,11 @@ stdenv.mkDerivation (finalAttrs: {
   strictDeps = true;
   __structuredAttrs = true;
 
+  outputs = [
+    "out"
+    "dev"
+  ];
+
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit (finalAttrs) src;
     hash = "sha256-n0ACVH8NXwe7SIaGFoJ20WIGGR3XjcuLTwPSKGJpT5s=";
