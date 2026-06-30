@@ -26,6 +26,7 @@ stdenv.mkDerivation {
 
   inherit patches;
 
+  __structuredAttrs = true;
   strictDeps = true;
   depsBuildBuild = lib.optionals (lib.versionAtLeast version "0.23") [ buildPackages.stdenv.cc ];
   nativeBuildInputs =

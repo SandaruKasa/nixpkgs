@@ -70,6 +70,7 @@ stdenv.mkDerivation rec {
     sed -i "s/@GNULIB_CLOSE@/1/" */*/unistd.in.h
   '';
 
+  __structuredAttrs = true;
   strictDeps = true;
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook

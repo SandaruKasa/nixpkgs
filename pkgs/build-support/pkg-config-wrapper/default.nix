@@ -52,6 +52,7 @@ stdenv.mkDerivation {
 
   outputs = [ "out" ] ++ optionals propagateDoc ([ "man" ] ++ optional (pkg-config ? doc) "doc");
 
+  __structuredAttrs = true;
   strictDeps = true;
   dontBuild = true;
   dontConfigure = true;

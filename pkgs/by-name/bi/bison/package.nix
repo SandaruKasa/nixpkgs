@@ -28,6 +28,7 @@ stdenv.mkDerivation (finalAttrs: {
     "host"
   ];
 
+  __structuredAttrs = true;
   # there's a /bin/sh shebang in bin/yacc which when no strictDeps is patched with the build stdenv shell
   # however when cross-compiling it would still be patched with the build stdenv shell which would be wrong
   # cannot add bash to buildInputs due to infinite recursion

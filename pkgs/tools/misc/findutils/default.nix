@@ -77,6 +77,8 @@ stdenv.mkDerivation (finalAttrs: {
     moveToOutput share/man/man1/updatedb.1.gz $locate
   '';
 
+  __structuredAttrs = true;
+  strictDeps = true;
   enableParallelBuilding = true;
 
   # bionic libc is super weird and has issues with fortify outside of its own libc, check this comment:

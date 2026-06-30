@@ -40,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
   ];
 
+  __structuredAttrs = true;
   strictDeps = true;
   enableParallelBuilding = true;
 

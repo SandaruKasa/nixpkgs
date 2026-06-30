@@ -36,6 +36,8 @@ stdenv.mkDerivation (finalAttrs: {
     "info"
   ];
 
+  __structuredAttrs = true;
+  strictDeps = true;
   enableParallelBuilding = true;
 
   nativeBuildInputs = [

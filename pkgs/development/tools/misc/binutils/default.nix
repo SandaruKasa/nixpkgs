@@ -137,6 +137,7 @@ stdenv.mkDerivation (finalAttrs: {
   # cross-binutils.
   ++ lib.optionals (targetPlatform == hostPlatform) [ "lib" ];
 
+  __structuredAttrs = true;
   strictDeps = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   # texinfo was removed here in https://github.com/NixOS/nixpkgs/pull/210132

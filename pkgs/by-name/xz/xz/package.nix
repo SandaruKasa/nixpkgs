@@ -24,6 +24,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-//H/zysNqE0wihTeUToaoj1OmqNGTRfmS5cUv90Lv7Y=";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
   outputs = [
     "bin"

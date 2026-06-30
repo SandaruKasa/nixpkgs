@@ -17,6 +17,7 @@ stdenv.mkDerivation (finalAttrs: {
     ./gcc15.patch
   ];
 
+  __structuredAttrs = true;
   strictDeps = true;
   enableParallelBuilding = true;
 

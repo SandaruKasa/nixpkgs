@@ -42,6 +42,7 @@ stdenv.mkDerivation rec {
       touch doc/libtoolize.1
     '';
 
+  __structuredAttrs = true;
   strictDeps = true;
   # As libtool is an early bootstrap dependency try hard not to
   # add autoconf and automake or help2man dependencies here. That way we can

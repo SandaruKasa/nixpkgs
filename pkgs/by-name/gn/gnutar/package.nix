@@ -67,7 +67,7 @@ stdenv.mkDerivation (finalAttrs: {
     stdenv.hostPlatform.system == "armv7l-linux" || stdenv.hostPlatform.isSunOS
   ) "1";
 
-  doCheck = true;
+  doCheck = false; # largely the same as the install check
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
 

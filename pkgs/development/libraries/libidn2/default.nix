@@ -23,6 +23,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-9VeRG/YXFiHh9y/zX1sYJbs1tS7UUyXc3ukx5dPAeHo=";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
   # Beware: non-bootstrap libidn2 is overridden by ./hack.nix
   outputs = [

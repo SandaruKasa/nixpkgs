@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-F3RfVkFZyOIo/EEtplogSLhGxLa0Igt3y/IkFuAvLXw=";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
 
   setupHook = [ ./setup-hook.sh ];

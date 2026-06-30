@@ -39,7 +39,9 @@ stdenv.mkDerivation (finalAttrs: {
   # directory until derivation realization to avoid unnecessary Nix evaluations.
   patches = lib.filesystem.listFilesRecursive ./patches;
 
+  __structuredAttrs = true;
   strictDeps = true;
+  enableParallelBuilding = true;
 
   nativeBuildInputs = [
     autoreconfHook

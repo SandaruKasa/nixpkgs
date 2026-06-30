@@ -60,7 +60,9 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail 'gzopen_w' ""
   '';
 
+  __structuredAttrs = true;
   strictDeps = true;
+
   outputs = [
     "out"
     "dev"

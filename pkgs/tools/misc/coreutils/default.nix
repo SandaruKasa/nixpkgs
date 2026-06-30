@@ -199,6 +199,8 @@ stdenv.mkDerivation (finalAttrs: {
     && (stdenv.hostPlatform.libc == "glibc" || stdenv.hostPlatform.libc == "musl")
     && !stdenv.hostPlatform.isAarch32;
 
+  __structuredAttrs = true;
+  strictDeps = true;
   enableParallelBuilding = true;
 
   env = {

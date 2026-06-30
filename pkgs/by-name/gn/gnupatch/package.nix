@@ -31,6 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = stdenv.hostPlatform.libc != "musl";
   nativeCheckInputs = [ ed ];
 
+  __structuredAttrs = true;
   strictDeps = true;
 
   meta = {

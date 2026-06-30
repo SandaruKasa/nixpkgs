@@ -618,7 +618,9 @@ stdenvNoCC.mkDerivation {
     wrap ${targetPrefix}go ${./go-wrapper.sh} $ccPath/${targetPrefix}go
   '';
 
+  __structuredAttrs = true;
   strictDeps = true;
+
   propagatedBuildInputs = [
     bintools
   ]

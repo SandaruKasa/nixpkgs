@@ -273,6 +273,7 @@ stdenvNoCC.mkDerivation {
     done
   '';
 
+  __structuredAttrs = true;
   strictDeps = true;
   depsTargetTargetPropagated = extraPackages;
 

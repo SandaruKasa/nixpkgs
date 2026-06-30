@@ -21,6 +21,9 @@ stdenv.mkDerivation (finalAttrs: {
     "--program-transform-name='s,^,b,'"
   ];
 
+  __structuredAttrs = true;
+  strictDeps = true;
+  enableParallelBuilding = true;
   doCheck = true;
 
   postInstall = ''

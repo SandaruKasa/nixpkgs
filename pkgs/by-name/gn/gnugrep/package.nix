@@ -15,16 +15,12 @@
 # cgit) that are needed here should be included directly in Nixpkgs as
 # files.
 
-let
-  version = "3.12";
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "gnugrep";
-  inherit version;
+  version = "3.12";
 
   src = fetchurl {
-    url = "mirror://gnu/grep/grep-${version}.tar.xz";
+    url = "mirror://gnu/grep/grep-${finalAttrs.version}.tar.xz";
     hash = "sha256-JkmyfA6Q5jLq3NdXvgbG6aT0jZQd5R58D4P/dkCKB7k=";
   };
 
@@ -80,6 +76,8 @@ stdenv.mkDerivation {
     export MKDIR_P="mkdir -p"
   '';
 
+  __structuredAttrs = true;
+  strictDeps = true;
   enableParallelBuilding = true;
 
   # Fix reference to sh in bootstrap-tools, and invoke grep via
@@ -116,7 +114,7 @@ stdenv.mkDerivation {
     teams = [ lib.teams.security-review ];
     platforms = lib.platforms.all;
     mainProgram = "grep";
-    identifiers.cpeParts = lib.meta.cpeFullVersionWithVendor "gnu" version // {
+    identifiers.cpeParts = lib.meta.cpeFullVersionWithVendor "gnu" finalAttrs.version // {
       product = "grep";
     };
   };
@@ -124,4 +122,4 @@ stdenv.mkDerivation {
   passthru = {
     inherit pcre2;
   };
-}
+})

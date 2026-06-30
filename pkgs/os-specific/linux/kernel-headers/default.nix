@@ -54,6 +54,7 @@ let
 
       env.ARCH = stdenvNoCC.hostPlatform.linuxArch;
 
+      __structuredAttrs = true;
       strictDeps = true;
       enableParallelBuilding = true;
 

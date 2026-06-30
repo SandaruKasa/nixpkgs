@@ -75,11 +75,12 @@ rec {
       derivationArgs ? { },
       # name of the resulting derivation
       name,
-      # TODO(@Artturin): enable strictDeps always
     }:
     buildCommand:
     stdenv.mkDerivation (
       {
+        __structuredAttrs = true;
+        strictDeps = true;
         enableParallelBuilding = true;
         inherit buildCommand name;
         passAsFile = defaultPassAsFile ++ (derivationArgs.passAsFile or [ ]);
@@ -167,6 +168,10 @@ rec {
 
           eval "$checkPhase"
         '';
+
+        __structuredAttrs = derivationArgs.__structuredAttrs or true;
+        strictDeps = derivationArgs.strictDeps or true;
+        enableParallelBuilding = derivationArgs.enableParallelBuilding or false; # does not really matter
 
         meta =
           let

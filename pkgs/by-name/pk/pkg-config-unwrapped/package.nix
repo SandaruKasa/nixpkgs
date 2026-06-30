@@ -20,6 +20,7 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
     "doc"
   ];
+  __structuredAttrs = true;
   strictDeps = true;
 
   # Process Requires.private properly, see

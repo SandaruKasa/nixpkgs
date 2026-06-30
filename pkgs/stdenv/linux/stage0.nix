@@ -62,8 +62,9 @@ if minbootSupported then
         # stage1.
         ${localSystem.libc} = self.stdenv.mkDerivation {
           pname = "bootstrap-stage0-${localSystem.libc}";
-          strictDeps = true;
           version = "minimal-bootstrap";
+          __structuredAttrs = true;
+          strictDeps = true;
           enableParallelBuilding = true;
           buildCommand = ''
             mkdir -p $out

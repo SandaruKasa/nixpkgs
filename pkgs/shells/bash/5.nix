@@ -134,6 +134,7 @@ lib.warnIf (withDocs != null)
       "bash_cv_dev_fd=absent"
     ];
 
+    __structuredAttrs = true;
     strictDeps = true;
     # Note: Bison is needed because the patches above modify parse.y.
     depsBuildBuild = [ buildPackages.stdenv.cc ];

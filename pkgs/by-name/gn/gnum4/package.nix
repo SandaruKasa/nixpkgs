@@ -31,6 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
     find . -name Makefile.in -exec touch {} + || die
   '';
 
+  __structuredAttrs = true;
   strictDeps = true;
 
   enableParallelBuilding = true;

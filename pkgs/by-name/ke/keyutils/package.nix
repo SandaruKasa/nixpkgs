@@ -51,6 +51,8 @@ stdenv.mkDerivation (finalAttrs: {
         'VCPPFLAGS	:= -DPKGBUILD="\"$(date -ud "@$SOURCE_DATE_EPOCH" +%F)\""'
   '';
 
+  __structuredAttrs = true;
+  strictDeps = true;
   enableParallelBuilding = true;
 
   env = lib.optionalAttrs (stdenv.hostPlatform.useLLVM) {

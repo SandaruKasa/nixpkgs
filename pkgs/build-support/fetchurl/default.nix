@@ -41,7 +41,9 @@ let
   mirrorsFile = buildPackages.stdenvNoCC.mkDerivation (
     {
       name = "mirrors-list";
+      __structuredAttrs = true;
       strictDeps = true;
+      enableParallelBuilding = false;
       builder = ./write-mirror-list.sh;
       preferLocalBuild = true;
     }
@@ -289,6 +291,8 @@ lib.extendMkDerivation {
     derivationArgs
     // {
       __structuredAttrs = true;
+      strictDeps = true;
+      enableParallelBuilding = true;
 
       name =
         if finalAttrs.pname or null != null && finalAttrs.version or null != null then

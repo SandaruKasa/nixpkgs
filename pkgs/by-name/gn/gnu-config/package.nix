@@ -46,6 +46,7 @@ stdenv.mkDerivation {
 
   dontConfigure = true;
   dontBuild = true;
+  enableParallelBuilding = false;
 
   installPhase = ''
     runHook preInstall
@@ -65,6 +66,7 @@ stdenv.mkDerivation {
     runHook postFixup
   '';
 
+  __structuredAttrs = true;
   strictDeps = true;
 
   meta = {

@@ -49,6 +49,7 @@ stdenv.mkDerivation (
       EOF
     '';
 
+    __structuredAttrs = true;
     strictDeps = true;
     nativeBuildInputs = [ autoreconfHook ];
 

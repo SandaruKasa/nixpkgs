@@ -77,6 +77,8 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals enablePython [ python3 ];
 
+  __structuredAttrs = true;
+  strictDeps = true;
   enableParallelBuilding = true;
 
   configureFlags = [

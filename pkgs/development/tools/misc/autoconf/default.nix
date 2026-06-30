@@ -25,6 +25,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-n9ZyschCX6wvpn+gR3uZCYcmi5D/NtXwFtrle+DWtS4=";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
   nativeBuildInputs = [
     m4

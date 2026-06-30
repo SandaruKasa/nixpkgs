@@ -41,6 +41,7 @@ let
     ];
     passthru.static = self.out;
 
+    __structuredAttrs = true;
     strictDeps = true;
     depsBuildBuild = [ buildPackages.stdenv.cc ];
     nativeBuildInputs = [ m4 ];

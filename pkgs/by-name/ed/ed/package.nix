@@ -29,8 +29,9 @@ stdenv.mkDerivation (finalAttrs: {
     "CC=${stdenv.cc.targetPrefix}cc"
   ];
 
+  __structuredAttrs = true;
   strictDeps = true;
-
+  enableParallelBuilding = true;
   doCheck = true;
 
   passthru = {

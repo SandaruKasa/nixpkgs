@@ -248,6 +248,7 @@ stdenv.mkDerivation (
       "getent"
     ];
 
+    __structuredAttrs = true;
     strictDeps = true;
     depsBuildBuild = [ buildPackages.stdenv.cc ];
     nativeBuildInputs = [

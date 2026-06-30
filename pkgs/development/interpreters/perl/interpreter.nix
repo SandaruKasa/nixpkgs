@@ -152,7 +152,10 @@ stdenv.mkDerivation (
       inherit sha256;
     };
 
+    __structuredAttrs = true;
     strictDeps = true;
+    enableParallelBuilding = true;
+
     # TODO: Add a "dev" output containing the header files.
     outputs = [
       "out"
@@ -274,8 +277,6 @@ stdenv.mkDerivation (
     dontAddStaticConfigureFlags = true;
 
     dontAddPrefix = !crossCompiling;
-
-    enableParallelBuilding = true;
 
     # perl includes the build date, the uname of the build system and the
     # username of the build user in some files.

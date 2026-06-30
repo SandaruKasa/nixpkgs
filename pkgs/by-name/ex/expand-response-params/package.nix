@@ -10,6 +10,7 @@
 stdenv.mkDerivation {
   name = "expand-response-params";
   src = ./expand-response-params.c;
+  __structuredAttrs = true;
   strictDeps = true;
   enableParallelBuilding = true;
   # Work around "stdenv-darwin-boot-2 is not allowed to refer to path

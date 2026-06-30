@@ -88,6 +88,7 @@ stdenv.mkDerivation {
     NATIVE_TOOLS_LDFLAGS = "-L${getLib buildPackages.ncurses}/lib";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
   enableParallelBuilding = true;
 

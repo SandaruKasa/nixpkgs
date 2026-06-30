@@ -227,6 +227,7 @@ pipe
       inherit patches;
 
       __structuredAttrs = true;
+      strictDeps = true;
 
       outputs = [
         "out"

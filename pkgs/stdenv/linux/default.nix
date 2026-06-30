@@ -504,6 +504,7 @@ in
             enableParallelBuilding = true;
             dontUnpack = true;
             dontBuild = true;
+            __structuredAttrs = true;
             strictDeps = true;
             # We wouldn't need to *copy* all, but it's easier and the result is temporary anyway.
             installPhase = ''
@@ -853,7 +854,6 @@ in
               inherit (self)
                 stdenv
                 runCommandLocal
-                patchelf
                 libunistring
                 ;
             };
