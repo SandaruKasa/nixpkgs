@@ -92,8 +92,8 @@ in
           ];
         };
 
-        linux_7_0 = callPackage ../os-specific/linux/kernel/mainline.nix {
-          branch = "7.0";
+        linux_7_1 = callPackage ../os-specific/linux/kernel/mainline.nix {
+          branch = "7.1";
           kernelPatches = [
             kernelPatches.bridge_stp_helper
             kernelPatches.request_key_helper
@@ -167,6 +167,7 @@ in
         linux_6_16 = throw "linux 6.16 was removed because it has reached its end of life upstream";
         linux_6_17 = throw "linux 6.17 was removed because it has reached its end of life upstream";
         linux_6_19 = throw "linux 6.19 was removed because it has reached its end of life upstream";
+        linux_7_0 = throw "linux 7.0 was removed because it has reached its end of life upstream";
 
         linux_5_10_hardened = throw "linux_hardened on nixpkgs only contains latest stable and latest LTS";
         linux_5_15_hardened = throw "linux_hardened on nixpkgs only contains latest stable and latest LTS";
@@ -463,8 +464,6 @@ in
 
         rtl8821au = callPackage ../os-specific/linux/rtl8821au { };
 
-        rtl8821ce = callPackage ../os-specific/linux/rtl8821ce { };
-
         rtl88x2bu = callPackage ../os-specific/linux/rtl88x2bu { };
 
         rtl8821cu = callPackage ../os-specific/linux/rtl8821cu { };
@@ -641,6 +640,7 @@ in
         hid-nintendo = throw "hid-nintendo was added in mainline kernel version 5.16"; # Added 2023-07-30
         sch_cake = throw "sch_cake was added in mainline kernel version 4.19"; # Added 2023-06-14
         rtl8723bs = throw "rtl8723bs was added in mainline kernel version 4.12"; # Added 2023-06-14
+        rtl8821ce = throw "rtl8821ce has been removed due to lack of maintenance"; # Added 2026-07-22
         vm-tools = self.mm-tools;
         xmm7360-pci = throw "Support for the XMM7360 WWAN card was added to the iosm kmod in mainline kernel version 5.18";
         amdgpu-pro = throw "amdgpu-pro was removed due to lack of maintenance"; # Added 2024-06-16
@@ -666,7 +666,7 @@ in
     linux_6_6 = recurseIntoAttrs (packagesFor kernels.linux_6_6);
     linux_6_12 = recurseIntoAttrs (packagesFor kernels.linux_6_12);
     linux_6_18 = recurseIntoAttrs (packagesFor kernels.linux_6_18);
-    linux_7_0 = recurseIntoAttrs (packagesFor kernels.linux_7_0);
+    linux_7_1 = recurseIntoAttrs (packagesFor kernels.linux_7_1);
   }
   // lib.optionalAttrs config.allowAliases {
     linux_4_19 = throw "linux 4.19 was removed because it will reach its end of life within 24.11"; # Added 2024-09-21
@@ -680,6 +680,7 @@ in
     linux_6_16 = throw "linux 6.16 was removed because it reached its end of life upstream"; # Added 2025-10-22
     linux_6_17 = throw "linux 6.17 was removed because it reached its end of life upstream"; # Added 2025-12-22
     linux_6_19 = throw "linux 6.19 was removed because it reached its end of life upstream"; # Added 2026-04-23
+    linux_7_0 = throw "linux 7.0 was removed because it has reached its end of life upstream"; # Added 2026-06-27
   };
 
   rpiPackages = {
@@ -735,7 +736,7 @@ in
   packageAliases = {
     linux_default = packages.linux_6_18;
     # Update this when adding the newest kernel major version!
-    linux_latest = packages.linux_7_0;
+    linux_latest = packages.linux_7_1;
   }
   // lib.optionalAttrs config.allowAliases {
     linux_mptcp = throw "'linux_mptcp' has been moved to https://github.com/teto/mptcp-flake";

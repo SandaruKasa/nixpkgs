@@ -1,11 +1,11 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch2,
+  fetchpatch,
   buildPythonPackage,
 
   # build-system
-  poetry-core,
+  uv-build,
 
   # nativeBuildInputs
   beets-minimal,
@@ -14,7 +14,6 @@
   pytestCheckHook,
   beets-audible,
   mediafile,
-  pytest,
   reflink,
   toml,
   typeguard,
@@ -23,31 +22,44 @@
 
 buildPythonPackage (finalAttrs: {
   pname = "beets-filetote";
-  version = "1.3.5";
+  version = "1.3.6";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "gtronset";
     repo = "beets-filetote";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-qMHjcBrXkVG7U5a1E0yRwNgmg7XinRnK3gnV7jAZLTk=";
+    hash = "sha256-ZrF9Z3Eaem8ZzNJgQoW45MvsNOCoLsd7l/yLQ2pldR0=";
   };
-  # needed to keep beetsplug a namespace package, othwise other plugins will not be found
-  # can be removed with next version
+
   patches = [
-    (fetchpatch2 {
-      url = "https://github.com/gtronset/beets-filetote/commit/762cf0c4b60b8f6b38cf39b027de4241f12cef37.patch?full_index=1";
-      hash = "sha256-c7qIECcqwoV4ZOaA/8JYsM6Aym34peWPh7ZLWUxIYSI=";
-      excludes = [ "CHANGELOG.md" ];
+    # Fixes a few test failures needed since beets 2.12, see:
+    # https://github.com/gtronset/beets-filetote/issues/328
+    # https://github.com/gtronset/beets-filetote/pull/336
+    (fetchpatch {
+      url = "https://github.com/gtronset/beets-filetote/commit/2684482ebe0cd486512b07621e3904de7faf7dc8.patch";
+      # Cause merge conflicts
+      excludes = [
+        # The changes here mainly include ci related changes, and hence can be
+        # disabled.
+        "pyproject.toml"
+        "CHANGELOG.md"
+      ];
+      hash = "sha256-zVVJY4+f8A+GBxiHZL8OzLWUUmX9uY25tUoLCkzEHh8=";
     })
+    # Fixes test errors with beets 2.13. Upstream PR is
+    # https://github.com/gtronset/beets-filetote/pull/351 . It is not merged and not even
+    # commented by upstream, so we vendor it instead.
+    ./beets2.13.patch
   ];
 
+  # https://github.com/gtronset/beets-filetote/issues/328
   postPatch = ''
-    substituteInPlace pyproject.toml --replace-fail "poetry-core<2.0.0" "poetry-core"
+    substituteInPlace pyproject.toml --replace-fail "uv_build>=0.11.21,<0.12" "uv-build"
   '';
 
   build-system = [
-    poetry-core
+    uv-build
   ];
 
   nativeBuildInputs = [
@@ -56,9 +68,6 @@ buildPythonPackage (finalAttrs: {
 
   dependencies = [
     mediafile
-    reflink
-    toml
-    typeguard
   ];
 
   nativeCheckInputs = [
@@ -69,12 +78,6 @@ buildPythonPackage (finalAttrs: {
     toml
     typeguard
     writableTmpDirAsHomeHook
-  ];
-
-  pytestFlags = [
-    # This is the same as:
-    #   -r fEs
-    "-rfEs"
   ];
 
   meta = {

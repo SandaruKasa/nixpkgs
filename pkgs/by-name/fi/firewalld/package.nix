@@ -43,7 +43,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "firewalld";
-  version = "2.4.2";
+  version = "2.5.0";
 
   __structuredAttrs = true;
   strictDeps = true;
@@ -52,7 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "firewalld";
     repo = "firewalld";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-RUDDUvpGfWEKI+VtC4SBMLKsAHkStV1qAYpHLQbN5HM=";
+    hash = "sha256-d/mKBkyi9f1/FpD5ECnvC0R/WCtfq6ewWu8kFs6sG9o=";
   };
 
   patches = [
@@ -80,6 +80,7 @@ stdenv.mkDerivation (finalAttrs: {
     docbook_xml_dtd_42
     docbook-xsl-nons
     glib
+    gobject-introspection
     intltool
     libxml2
     libxslt
@@ -94,7 +95,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     glib
-    gobject-introspection
     ipset
     iptables
     kmod
@@ -132,6 +132,9 @@ stdenv.mkDerivation (finalAttrs: {
   ''
   + lib.optionalString (!withGui) ''
     rm $out/bin/firewall-{applet,config}
+    rm $out/etc/xdg/autostart/firewall-applet.desktop
+    rm $out/share/applications/firewall-config.desktop
+    rm $out/share/metainfo/org.firewalld.firewall-config.metainfo.xml
   '';
 
   dontWrapGApps = true;

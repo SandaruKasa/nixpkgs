@@ -24,6 +24,8 @@ let
 
         aeneas = callPackage ../development/ocaml-modules/aeneas { };
 
+        alcobar = callPackage ../development/ocaml-modules/alcobar { };
+
         alcotest = callPackage ../development/ocaml-modules/alcotest { };
 
         alcotest-lwt = callPackage ../development/ocaml-modules/alcotest/lwt.nix { };
@@ -50,11 +52,15 @@ let
 
         angstrom-unix = callPackage ../development/ocaml-modules/angstrom-unix { };
 
+        ansi = callPackage ../development/ocaml-modules/ansi { };
+
         ansiterminal = callPackage ../development/ocaml-modules/ansiterminal { };
 
         ao = callPackage ../development/ocaml-modules/ao { };
 
         apron = callPackage ../development/ocaml-modules/apron { };
+
+        apronext = callPackage ../development/ocaml-modules/apronext { };
 
         argon2 = callPackage ../development/ocaml-modules/argon2 { };
 
@@ -243,6 +249,8 @@ let
           git-binary = pkgs.git;
         };
 
+        cascade = callPackage ../development/ocaml-modules/cascade { };
+
         cbor = callPackage ../development/ocaml-modules/cbor { };
 
         cfstream = callPackage ../development/ocaml-modules/cfstream { };
@@ -267,6 +275,8 @@ let
 
         cmdliner_1 = cmdliner.override { version = "1.3.0"; };
 
+        cmon = callPackage ../development/ocaml-modules/cmon { };
+
         cohttp = callPackage ../development/ocaml-modules/cohttp { };
 
         cohttp_5_3 = cohttp.overrideAttrs (_: {
@@ -287,6 +297,8 @@ let
         cohttp-lwt-jsoo = callPackage ../development/ocaml-modules/cohttp/lwt-jsoo.nix { };
 
         cohttp-lwt-unix = callPackage ../development/ocaml-modules/cohttp/lwt-unix.nix { };
+
+        cohttp-server-lwt-unix = callPackage ../development/ocaml-modules/cohttp/server-lwt-unix.nix { };
 
         cohttp-top = callPackage ../development/ocaml-modules/cohttp/top.nix { };
 
@@ -704,6 +716,10 @@ let
 
         functory = callPackage ../development/ocaml-modules/functory { };
 
+        fuse3 = callPackage ../development/ocaml-modules/fuse3 {
+          inherit (pkgs) fuse3;
+        };
+
         ### G ###
 
         gapi-ocaml = callPackage ../development/ocaml-modules/gapi-ocaml { };
@@ -768,6 +784,8 @@ let
           inherit (pkgs) gnuplot;
         };
 
+        grace = callPackage ../development/ocaml-modules/grace { };
+
         graphics =
           if lib.versionOlder "4.09" ocaml.version then
             callPackage ../development/ocaml-modules/graphics { }
@@ -783,6 +801,8 @@ let
         graphql_parser = callPackage ../development/ocaml-modules/graphql/parser.nix { };
 
         graphql_ppx = callPackage ../development/ocaml-modules/graphql_ppx { };
+
+        grenier = callPackage ../development/ocaml-modules/grenier { };
 
         gsl = callPackage ../development/ocaml-modules/gsl {
           inherit (pkgs) gsl;
@@ -1113,6 +1133,8 @@ let
 
         letters = callPackage ../development/ocaml-modules/letters { };
 
+        libabsolute = callPackage ../development/ocaml-modules/libabsolute { };
+
         libc = callPackage ../development/ocaml-modules/libc { };
 
         lilv = callPackage ../development/ocaml-modules/lilv {
@@ -1144,6 +1166,8 @@ let
         logs-syslog = callPackage ../development/ocaml-modules/logs-syslog { };
 
         lreplay = callPackage ../development/ocaml-modules/lreplay { };
+
+        lrgrep = callPackage ../development/ocaml-modules/lrgrep { };
 
         lru = callPackage ../development/ocaml-modules/lru { };
 
@@ -1550,8 +1574,6 @@ let
           callPackage ../development/ocaml-modules/ocamlformat/ocamlformat-rpc-lib.nix
             { };
 
-        ocamlfuse = callPackage ../development/ocaml-modules/ocamlfuse { };
-
         ocamlgraph = callPackage ../development/ocaml-modules/ocamlgraph { };
         ocamlgraph_gtk = callPackage ../development/ocaml-modules/ocamlgraph/gtk.nix { };
 
@@ -1721,6 +1743,10 @@ let
 
         pbrt = callPackage ../development/ocaml-modules/pbrt { };
 
+        pbrt_services = callPackage ../development/ocaml-modules/pbrt/services.nix { };
+
+        pbrt_yojson = callPackage ../development/ocaml-modules/pbrt/yojson.nix { };
+
         pcre2 = callPackage ../development/ocaml-modules/pcre2 {
           inherit (pkgs) pcre2;
         };
@@ -1746,6 +1772,8 @@ let
         phylogenetics = callPackage ../development/ocaml-modules/phylogenetics { };
 
         piaf = callPackage ../development/ocaml-modules/piaf { };
+
+        picasso = callPackage ../development/ocaml-modules/picasso { };
 
         piqi = callPackage ../development/ocaml-modules/piqi { };
 
@@ -2179,6 +2207,8 @@ let
 
         tuntap = callPackage ../development/ocaml-modules/tuntap { };
 
+        tw = callPackage ../development/ocaml-modules/tw { };
+
         twt = callPackage ../development/ocaml-modules/twt { };
 
         type_eq = callPackage ../development/ocaml-modules/type_eq { };
@@ -2260,6 +2290,8 @@ let
         webbrowser = callPackage ../development/ocaml-modules/webbrowser { };
 
         webmachine = callPackage ../development/ocaml-modules/webmachine { };
+
+        windtrap = callPackage ../development/ocaml-modules/windtrap { };
 
         wtf8 = callPackage ../development/ocaml-modules/wtf8 { };
 
@@ -2360,6 +2392,7 @@ let
         ocaml-vdom = throw "2023-10-09: ocamlPackages.ocaml-vdom was renamed to ocamlPackages.vdom";
         ocaml_lwt = throw "ocamlPackages.ocaml_lwt has been renamed to ocamlPackages.lwt"; # Added 2025-12-05
         ocaml_mysql = throw "ocamlPackages.ocaml_mysql is not maintained, use ocamlPackages.mariadb instead";
+        ocamlfuse = throw "ocamlPackages.ocamlfuse has been removed as it depends on fuse2";
         torch = throw "ocamlPackages.torch has been removed due to being broken for more than a year; see RFC 180"; # Added 2026-02-05
       }
     )).overrideScope
@@ -2394,7 +2427,9 @@ rec {
 
   ocamlPackages_5_4 = mkOcamlPackages (callPackage ../development/compilers/ocaml/5.4.nix { });
 
-  ocamlPackages_latest = ocamlPackages_5_4;
+  ocamlPackages_5_5 = mkOcamlPackages (callPackage ../development/compilers/ocaml/5.5.nix { });
+
+  ocamlPackages_latest = ocamlPackages_5_5;
 
   ocamlPackages = ocamlPackages_5_4;
 

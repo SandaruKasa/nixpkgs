@@ -8,6 +8,7 @@
   core_unix,
   domainslib,
   ocamlgraph,
+  ppx_deriving_yojson,
   progress,
   visitors,
 
@@ -16,7 +17,8 @@
 
 buildDunePackage (finalAttrs: {
   pname = "aeneas";
-  version = "2026.06.14";
+  # Keep aeneas and charon in sync
+  version = "${charon.version}-bc2eb6f";
   __structuredAttrs = true;
 
   minimalOCamlVersion = "5.1";
@@ -25,7 +27,7 @@ buildDunePackage (finalAttrs: {
     owner = "AeneasVerif";
     repo = "aeneas";
     tag = "nightly-${finalAttrs.version}";
-    hash = "sha256-ef68sJtVdKlIr7IiZSehFlG87m1BjW5HSG8PYxbs3Lg=";
+    hash = "sha256-V5+3pPpDhcrRGA9kmYmod3/pScwfYZEj6MJKsuhbROk=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/src";
@@ -35,6 +37,7 @@ buildDunePackage (finalAttrs: {
     core_unix
     domainslib
     ocamlgraph
+    ppx_deriving_yojson
     progress
     visitors
   ];

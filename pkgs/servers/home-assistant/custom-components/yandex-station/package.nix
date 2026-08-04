@@ -10,13 +10,13 @@
 buildHomeAssistantComponent rec {
   owner = "AlexxIT";
   domain = "yandex_station";
-  version = "3.21.2";
+  version = "3.21.4";
 
   src = fetchFromGitHub {
     owner = "AlexxIT";
     repo = "YandexStation";
     tag = "v${version}";
-    hash = "sha256-TjrBb7MatydixSEEAcM7ezQ8hDGKxTapD2h40c/0AxQ=";
+    hash = "sha256-NbR8CqF7dr0q2nFZHi90IGmDELflcboeJTlVeYoBdvw=";
   };
 
   dependencies = [

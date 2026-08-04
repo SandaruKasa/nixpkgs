@@ -15,7 +15,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "proton-pass-cli";
-  version = "2.1.3";
+  version = "2.2.3";
 
   __structuredAttrs = true;
   strictDeps = true;
@@ -57,19 +57,15 @@ stdenv.mkDerivation (finalAttrs: {
     sources = {
       "aarch64-darwin" = fetchurl {
         url = "https://proton.me/download/pass-cli/${finalAttrs.version}/pass-cli-macos-aarch64";
-        hash = "sha256-pQihDrFG3w5LVbcAqT8MT7cJlhhcfIAgHwD/oyPLcEM=";
+        hash = "sha256-gxjlrznYmXgCFOxixtHCz9x2KLsgNtuo9yr3TJpjxzI=";
       };
       "aarch64-linux" = fetchurl {
         url = "https://proton.me/download/pass-cli/${finalAttrs.version}/pass-cli-linux-aarch64";
-        hash = "sha256-90rHOiapg8RfmLzD7kyqiaaiabnuQ60X95iR1sBV8gg=";
-      };
-      "x86_64-darwin" = fetchurl {
-        url = "https://proton.me/download/pass-cli/${finalAttrs.version}/pass-cli-macos-x86_64";
-        hash = "sha256-nC1OKcCqCQq972VWlkOCcv4zCYqVRFbg+X9yP1zwqMU=";
+        hash = "sha256-NdBabzetuIJEbu81Rfg3hUVEw8BJ2A3Who/i08/qwMs=";
       };
       "x86_64-linux" = fetchurl {
         url = "https://proton.me/download/pass-cli/${finalAttrs.version}/pass-cli-linux-x86_64";
-        hash = "sha256-2/v/4cIHf50o2G6yxgCunbGgBMYE7CZwpA5iT2rpBHo=";
+        hash = "sha256-cYjwKnweeahg9xZq0sNPei5slhJltwZ34nBPIW3Rdtk=";
       };
     };
     updateScript = writeShellScript "update-proton-pass-cli" ''
@@ -95,7 +91,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Command-line interface for managing your Proton Pass vaults, items, and secrets";
     homepage = "https://github.com/protonpass/pass-cli";
-    license = lib.licenses.unfree;
+    license = lib.licenses.gpl3Plus;
     mainProgram = "pass-cli";
     maintainers = with lib.maintainers; [ delafthi ];
     platforms = lib.attrNames finalAttrs.passthru.sources;

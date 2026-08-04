@@ -17,6 +17,7 @@ let
   python = python3.override {
     self = python;
     packageOverrides = self: super: {
+      chardet = super.chardet_5;
       django = super.django_5;
 
       django-oauth-toolkit = super.django-oauth-toolkit.overridePythonAttrs (oldAttrs: rec {
@@ -54,14 +55,14 @@ let
 in
 pythonPackages.buildPythonApplication (finalAttrs: {
   pname = "pretix";
-  version = "2026.5.1";
+  version = "2026.6.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "pretix";
     repo = "pretix";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-p4ZZzfoR4Wg65xeqk9JyCdZ+S7RqBVd1drWpHjj8oqc=";
+    hash = "sha256-P8anV87K/UFOCztGz8iNb5NbmAC3JkFqAm8vKXkr0qY=";
   };
 
   patches = [
@@ -87,7 +88,7 @@ pythonPackages.buildPythonApplication (finalAttrs: {
 
   npmDeps = fetchNpmDeps {
     inherit (finalAttrs) src;
-    hash = "sha256-Gkcz/QJCNuvhIdZnP/mPx5GD0EOJzxoP1dGI43pyOro=";
+    hash = "sha256-DJCvNcgDIY71Q9qg4Ng7SAM9i9wHhHOdJonpt5t/Xx8=";
   };
 
   nativeBuildInputs = [
@@ -207,6 +208,7 @@ pythonPackages.buildPythonApplication (finalAttrs: {
     "django-i18nfield"
     "django-localflavor"
     "django-phonenumber-field"
+    "django-scopes"
     "dnspython"
     "drf_ujson2"
     "importlib_metadata"

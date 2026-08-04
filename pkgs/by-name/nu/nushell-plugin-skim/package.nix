@@ -8,16 +8,16 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "nu_plugin_skim";
-  version = "0.28.0";
+  version = "0.29.1";
 
   src = fetchFromGitHub {
     owner = "idanarye";
     repo = "nu_plugin_skim";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-RbDolD23azEpyfropCB32nqhrLoRXNBNLwgwBKCjmo0=";
+    hash = "sha256-Ddnn5H2NjYuv+7v4JxT56pq5Kr7N8yv+NG5gYITf4qc=";
   };
 
-  cargoHash = "sha256-FERL4QvkSWOJ5eVxaDLHCjqazUdtS79ONJ8SWxpl9cI=";
+  cargoHash = "sha256-ZYG8nIh/nQ3nRGkN3pnU6j7BMR5fOx/qOYppdZdfXe0=";
 
   nativeBuildInputs = lib.optionals stdenv.cc.isClang [ rustPlatform.bindgenHook ];
 

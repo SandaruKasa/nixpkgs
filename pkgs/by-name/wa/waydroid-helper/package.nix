@@ -21,6 +21,7 @@
   libxml2,
   systemd,
   unzip,
+  vte-gtk4,
   nix-update-script,
   fetchpatch,
 }:
@@ -83,6 +84,7 @@ python3Packages.buildPythonApplication {
     libadwaita
     libxml2
     systemd
+    vte-gtk4
   ];
 
   dontUseCmakeConfigure = true;
@@ -123,7 +125,7 @@ python3Packages.buildPythonApplication {
     changelog = "https://github.com/ayasa520/waydroid-helper/releases/tag/${src.tag}";
     description = "User-friendly way to configure Waydroid and install extensions, including Magisk and ARM translation";
     homepage = "https://github.com/ayasa520/waydroid-helper";
-    license = with lib.licenses; [ gpl3Plus ];
+    license = lib.licenses.gpl3Plus;
     mainProgram = "waydroid-helper";
     maintainers = [ ];
     platforms = lib.platforms.linux;

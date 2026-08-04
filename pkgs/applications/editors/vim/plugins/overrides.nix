@@ -935,6 +935,7 @@ assertNoAdditions {
     nvimSkipModules = [
       "repro_blink"
       "repro_cmp"
+      "repro_native_completion"
     ];
   };
 
@@ -1551,6 +1552,18 @@ assertNoAdditions {
     ];
   };
 
+  fyler-nvim = super.fyler-nvim.overrideAttrs {
+    nvimSkipModules = [
+      # Requires setup
+      "fyler.extensions.trash"
+      "fyler.finder"
+      "fyler.integrations.icon"
+      "fyler.integrations.window_picker"
+      "fyler.schemes.file"
+      "fyler.state"
+    ];
+  };
+
   fzf-checkout-vim = super.fzf-checkout-vim.overrideAttrs {
     # The plugin has a makefile which tries to run tests in a docker container.
     # This prevents it.
@@ -1656,7 +1669,8 @@ assertNoAdditions {
     ];
     checkInputs = with self; [
       luasnip
-      null-ls-nvim
+      none-ls-nvim
+      plenary-nvim
     ];
     nvimSkipModules = [
       "init"
@@ -2012,18 +2026,13 @@ assertNoAdditions {
     let
       kulala-http-grammar = neovimUtils.grammarToPlugin (
         tree-sitter.buildGrammar {
-          inherit (old) version src meta;
           language = "kulala_http";
-          location = "lua/tree-sitter";
+          inherit (luaPackages.tree-sitter-kulala_http) version src meta;
           generate = false;
         }
       );
     in
     {
-      patches = (old.patches or [ ]) ++ [
-        ./patches/kulala-nvim/use-packaged-tree-sitter-parser.patch
-      ];
-
       dependencies = [ kulala-http-grammar ];
 
       postPatch = ''
@@ -2036,6 +2045,7 @@ assertNoAdditions {
         "cli.kulala_cli"
         # Upstream test harnesses are not require-safe modules
         "minit"
+        "minit-userscript"
         "minitest"
         "test"
         # Legacy parser module; active parsing is handled by kulala-core
@@ -2481,7 +2491,8 @@ assertNoAdditions {
   mason-null-ls-nvim = super.mason-null-ls-nvim.overrideAttrs {
     dependencies = with self; [
       mason-nvim
-      null-ls-nvim
+      none-ls-nvim
+      plenary-nvim
     ];
   };
 
@@ -3014,11 +3025,24 @@ assertNoAdditions {
     ];
   };
 
+  neovim-project = super.neovim-project.overrideAttrs {
+    dependencies = with self; [
+      plenary-nvim
+      neovim-session-manager
+    ];
+  };
+
   neovim-sensible = super.neovim-sensible.overrideAttrs (old: {
     meta = old.meta // {
       license = lib.licenses.mit;
     };
   });
+
+  neovim-session-manager = super.neovim-session-manager.overrideAttrs {
+    dependencies = with self; [
+      plenary-nvim
+    ];
+  };
 
   neovim-tips = super.neovim-tips.overrideAttrs {
     dependencies = [
@@ -3074,6 +3098,10 @@ assertNoAdditions {
     dependencies = [ self.nui-nvim ];
   };
 
+  none-ls-extras-nvim = super.none-ls-extras-nvim.overrideAttrs {
+    dependencies = [ self.none-ls-nvim ];
+  };
+
   none-ls-nvim = super.none-ls-nvim.overrideAttrs {
     dependencies = [ self.plenary-nvim ];
   };
@@ -3093,13 +3121,6 @@ assertNoAdditions {
   nterm-nvim = super.nterm-nvim.overrideAttrs {
     dependencies = [ self.aniseed ];
   };
-
-  null-ls-nvim = super.null-ls-nvim.overrideAttrs (old: {
-    dependencies = [ self.plenary-nvim ];
-    meta = old.meta // {
-      license = lib.licenses.unlicense;
-    };
-  });
 
   nvchad = super.nvchad.overrideAttrs {
     # You've signed up for a distro, providing dependencies.
@@ -3299,6 +3320,7 @@ assertNoAdditions {
   };
 
   nvim-jdtls = super.nvim-jdtls.overrideAttrs (old: {
+    runtimeDeps = [ python3 ];
     meta = old.meta // {
       license = lib.licenses.gpl3Only;
     };
@@ -3443,7 +3465,7 @@ assertNoAdditions {
     # Optional toggleterm integration
     checkInputs = [ self.toggleterm-nvim ];
     dependencies = with self; [
-      nvim-treesitter-legacy
+      nvim-treesitter
       nvim-treesitter-parsers.c_sharp
       nvim-treesitter-parsers.go
       nvim-treesitter-parsers.haskell
@@ -3580,7 +3602,6 @@ assertNoAdditions {
       snacks-nvim
       telescope-nvim
     ];
-    dependencies = [ self.plenary-nvim ];
     nvimSkipModules = [
       # Issue reproduction file
       "minimal"
@@ -4092,6 +4113,20 @@ assertNoAdditions {
       license = lib.licenses.mit;
     };
   });
+
+  slimline-nvim = super.slimline-nvim.overrideAttrs {
+    nvimSkipModules = [
+      # Component modules read the user-supplied slimline.config at require time.
+      "slimline.components.diagnostics"
+      "slimline.components.filetype_lsp"
+      "slimline.components.mode"
+      "slimline.components.path"
+      "slimline.components.progress"
+      "slimline.components.recording"
+      "slimline.components.searchcount"
+      "slimline.components.selectioncount"
+    ];
+  };
 
   smart-open-nvim = super.smart-open-nvim.overrideAttrs {
     dependencies = with self; [
@@ -4630,17 +4665,6 @@ assertNoAdditions {
 
   tv-nvim = super.tv-nvim.overrideAttrs {
     runtimeDeps = [ television ];
-  };
-
-  typescript-nvim = super.typescript-nvim.overrideAttrs {
-    checkInputs = [
-      # Optional null-ls integration
-      self.none-ls-nvim
-    ];
-    dependencies = with self; [
-      nvim-lspconfig
-      plenary-nvim
-    ];
   };
 
   typescript-tools-nvim = super.typescript-tools-nvim.overrideAttrs {
@@ -5797,22 +5821,6 @@ assertNoAdditions {
   vim-zscript = super.vim-zscript.overrideAttrs (old: {
     meta = old.meta // {
       license = lib.licenses.cc0;
-    };
-  });
-
-  vimacs = super.vimacs.overrideAttrs (old: {
-    buildPhase = ''
-      substituteInPlace bin/vim \
-        --replace-fail '/usr/bin/vim' 'vim' \
-        --replace-fail '/usr/bin/gvim' 'gvim'
-      # remove unnecessary duplicated bin wrapper script
-      rm -r plugin/vimacs
-    '';
-    meta = old.meta // {
-      description = "Vim-Improved eMACS: Emacs emulation plugin for Vim";
-      homepage = "http://algorithm.com.au/code/vimacs";
-      license = lib.licenses.gpl2Plus;
-      maintainers = with lib.maintainers; [ millerjason ];
     };
   });
 
