@@ -38,6 +38,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     ];
     maintainers = with lib.maintainers; [
       akshgpt7
+      sandarukasa
     ];
     mainProgram = "jql";
   };

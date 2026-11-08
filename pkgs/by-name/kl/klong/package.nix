@@ -51,7 +51,10 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Simple Array programming language";
     homepage = "https://t3x.org/klong";
     mainProgram = "kg";
-    maintainers = [ lib.maintainers.casaca ];
+    maintainers = with lib.maintainers; [
+      casaca
+      sandarukasa
+    ];
     platforms = lib.platforms.all;
     license = with lib.licenses; [
       publicDomain

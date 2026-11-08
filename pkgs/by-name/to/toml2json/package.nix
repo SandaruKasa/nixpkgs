@@ -20,6 +20,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
     mainProgram = "toml2json";
     homepage = "https://github.com/woodruffw/toml2json";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ rvarago ];
+    maintainers = with lib.maintainers; [
+      rvarago
+      sandarukasa
+    ];
   };
 })
