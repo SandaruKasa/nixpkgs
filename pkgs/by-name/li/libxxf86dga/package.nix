@@ -18,7 +18,15 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-s75bRE0yTLbg9LUBmklyyZ6jNsy4q3lo7M7+zZF//eY=";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
+  enableParallelBuilding = true;
+  doCheck = false; # no tests
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
 
   nativeBuildInputs = [ pkg-config ];
 
@@ -43,14 +51,21 @@ stdenv.mkDerivation (finalAttrs: {
         | sort -V | tail -n1)"
       update-source-version ${finalAttrs.pname} "$version"
     '';
-    tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage.dev;
+        versionCheck = true;
+      };
+    };
   };
 
   meta = {
     description = "Client library for the XFree86-DGA extension";
     homepage = "https://gitlab.freedesktop.org/xorg/lib/libxxf86dga";
     license = lib.licenses.x11;
-    maintainers = [ ];
+    maintainers = with lib.maintainers; [
+      sandarukasa
+    ];
     pkgConfigModules = [ "xxf86dga" ];
     platforms = lib.platforms.unix;
   };
