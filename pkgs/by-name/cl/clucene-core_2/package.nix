@@ -18,6 +18,9 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "1arffdwivig88kkx685pldr784njm0249k0rb1f1plwavlrw9zfx";
   };
 
+  __structuredAttrs = true;
+  strictDeps = true;
+
   nativeBuildInputs = [ cmake ];
 
   buildInputs = [
