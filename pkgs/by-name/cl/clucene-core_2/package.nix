@@ -20,6 +20,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   __structuredAttrs = true;
   strictDeps = true;
+  outputs = [
+    "out"
+    "dev"
+  ];
 
   nativeBuildInputs = [ cmake ];
 
@@ -87,11 +91,11 @@ stdenv.mkDerivation (finalAttrs: {
   passthru = {
     tests = {
       pkg-config = testers.hasPkgConfigModules {
-        package = finalAttrs.finalPackage;
+        package = finalAttrs.finalPackage.dev;
         versionCheck = true;
       };
       cmake-config = testers.hasCmakeConfigModules {
-        package = finalAttrs.finalPackage;
+        package = finalAttrs.finalPackage.dev;
         versionCheck = false;
       };
     };
