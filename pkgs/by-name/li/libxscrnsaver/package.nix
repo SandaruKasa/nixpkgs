@@ -18,7 +18,15 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-UFc2X4RyU+DidYcUQeEP94RsgyKl2I4eGH0ybeHNjQA=";
   };
 
+  __structuredAttrs = true;
   strictDeps = true;
+  doCheck = false; # no tests
+  enableParallelBuilding = true;
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
 
   nativeBuildInputs = [ pkg-config ];
 
@@ -43,14 +51,20 @@ stdenv.mkDerivation (finalAttrs: {
         | sort -V | tail -n1)"
       update-source-version ${finalAttrs.pname} "$version"
     '';
-    tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
+
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage.dev;
+        versionCheck = true;
+      };
+    };
   };
 
   meta = {
     description = "X11 Screen Saver extension client library";
     homepage = "https://gitlab.freedesktop.org/xorg/lib/libxscrnsaver";
     license = lib.licenses.x11;
-    maintainers = [ ];
+    maintainers = with lib.maintainers; [ sandarukasa ];
     pkgConfigModules = [ "xscrnsaver" ];
     platforms = lib.platforms.unix;
   };
