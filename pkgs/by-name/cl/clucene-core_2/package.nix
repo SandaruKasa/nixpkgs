@@ -6,6 +6,7 @@
   cmake,
   boost,
   zlib,
+  testers,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -80,6 +81,18 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = false;
 
   env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.cc.isClang "-Wno-error=c++11-narrowing";
+  passthru = {
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage;
+        versionCheck = true;
+      };
+      cmake-config = testers.hasCmakeConfigModules {
+        package = finalAttrs.finalPackage;
+        versionCheck = false;
+      };
+    };
+  };
 
   meta = {
     description = "Core library for full-featured text search engine";
@@ -99,5 +112,8 @@ stdenv.mkDerivation (finalAttrs: {
       asl20
       lgpl2
     ];
+    maintainers = with lib.maintainers; [ sandarukasa ];
+    cmakeConfigModules = [ "CLucene" ];
+    pkgConfigModules = [ "libclucene-core" ];
   };
 })
