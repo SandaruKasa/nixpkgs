@@ -2,7 +2,6 @@
   fetchurl,
   hdf5,
   lib,
-  matio,
   nix-update-script,
   pkgconf,
   stdenv,
@@ -20,6 +19,15 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-i9O5R3BC7MAN1xwEdi+lhGjhTMzDL9jGgmwtoei8MQc=";
   };
 
+  __structuredAttrs = true;
+  strictDeps = true;
+  enableParallelBuilding = true;
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
+
   configureFlags = [ "ac_cv_va_copy=1" ];
 
   nativeBuildInputs = [
@@ -35,11 +43,11 @@ stdenv.mkDerivation (finalAttrs: {
   passthru = {
     tests = {
       pkg-config = testers.hasPkgConfigModules {
-        package = matio;
+        package = finalAttrs.finalPackage.dev;
         versionCheck = true;
       };
       version = testers.testVersion {
-        package = matio;
+        package = finalAttrs.finalPackage;
       };
     };
     updateScript = nix-update-script { };
