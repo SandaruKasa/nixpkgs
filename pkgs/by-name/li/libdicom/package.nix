@@ -8,6 +8,7 @@
   ninja,
   pkg-config,
   check,
+  testers,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -23,6 +24,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
   __structuredAttrs = true;
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
 
   depsBuildBuild = [
     buildPackages.stdenv.cc
@@ -43,11 +49,21 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = true;
 
+  passthru = {
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage.dev;
+        versionCheck = true;
+      };
+    };
+  };
+
   meta = {
     description = "C library for reading DICOM files";
     homepage = "https://github.com/ImagingDataCommons/libdicom";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ lromor ];
     platforms = lib.platforms.unix;
+    pkgConfigModules = [ "libdicom" ];
   };
 })
