@@ -10,7 +10,6 @@
   # tests
   testers,
   vips,
-  libimagequant,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -18,6 +17,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
   version = "4.4.1";
 
   __structuredAttrs = true;
+  outputs = [
+    "out"
+    "dev"
+  ];
 
   src = fetchFromGitHub {
     owner = "ImageOptim";
@@ -54,8 +57,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     inherit (python3.pkgs) pillow;
 
     pkg-config = testers.hasPkgConfigModules {
-      package = libimagequant;
-      moduleNames = [ "imagequant" ];
+      package = finalAttrs.finalPackage.dev;
+      versionCheck = true;
     };
   };
 
