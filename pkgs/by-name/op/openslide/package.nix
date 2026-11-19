@@ -18,6 +18,7 @@
   sqlite,
   zlib,
   zstd,
+  testers,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -31,6 +32,14 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-9OrPdhO6ysDL6xSzCGv6IYWvYErZeMwb/VkU9YZp5Zg=";
   };
 
+  __structuredAttrs = true;
+  strictDeps = true;
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
+
   depsBuildBuild = [
     buildPackages.stdenv.cc
   ];
@@ -43,6 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   # The upstream developer test suite creates a virtualenv and downloads dependencies.
+  doCheck = false;
   mesonFlags = [ "-Dtest=disabled" ];
 
   buildInputs = [
@@ -58,6 +68,15 @@ stdenv.mkDerivation (finalAttrs: {
     zlib
     zstd
   ];
+
+  passthru = {
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage.dev;
+        versionCheck = true;
+      };
+    };
+  };
 
   meta = {
     homepage = "https://openslide.org";
