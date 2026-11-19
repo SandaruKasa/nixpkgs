@@ -1,0 +1,41 @@
+finalAttrs
+
+src: rev -> tag
+
+__structuredAttrs = true;
+strictDeps = true;
+
+enableParallelBuilding = true;
+
+doCheck = true;
+
+outputs = [
+    "out"
+    "dev"
+    "doc"
+    "man"
+];
+
+passthru = {
+    tests = {
+        cmake-config = testers.hasCmakeConfigModules {
+            package = finalAttrs.finalPackage.dev;
+            versionCheck = true;
+        };
+        pkg-config = testers.hasPkgConfigModules {
+            package = finalAttrs.finalPackage.dev;
+            versionCheck = true;
+        };
+    };
+};
+
+meta = {
+    cmakeConfigModules = [];
+    pkgConfigModules = [];
+    changelog
+    downloadPage
+}
+
+check out does not depend on `dev`
+
+check pkgconfig paths
