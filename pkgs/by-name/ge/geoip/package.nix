@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   autoreconfHook,
+  testers,
   drvName ? "geoip",
 
   # in geoipDatabase, you can insert a package defining
@@ -22,9 +23,19 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "maxmind";
     repo = "geoip-api-c";
-    rev = "v${finalAttrs.version}";
+    tag = "v${finalAttrs.version}";
     sha256 = "0ixyp3h51alnncr17hqp1p0rlqz9w69nlhm60rbzjjz3vjx52ajv";
   };
+
+  __structuredAttrs = true;
+  strictDeps = true;
+  enableParallelBuilding = true;
+  doCheck = true;
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
 
   nativeBuildInputs = [ autoreconfHook ];
 
@@ -39,7 +50,15 @@ stdenv.mkDerivation (finalAttrs: {
     find . -name Makefile.in -exec sed -i -r 's#^pkgdatadir\s*=.+$#pkgdatadir = ${dataDir}#' {} \;
   '';
 
-  passthru = { inherit dataDir; };
+  passthru = {
+    inherit dataDir;
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage.dev;
+        versionCheck = true;
+      };
+    };
+  };
 
   meta = {
     description = "API for GeoIP/Geolocation databases";
@@ -50,5 +69,6 @@ stdenv.mkDerivation (finalAttrs: {
     license = lib.licenses.lgpl21;
     platforms = lib.platforms.unix;
     homepage = "https://www.maxmind.com";
+    pkgConfigModules = [ "geoip" ];
   };
 })
