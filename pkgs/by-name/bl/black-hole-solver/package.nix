@@ -7,11 +7,23 @@
   pkg-config,
   python3,
   rinutils,
+  testers,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "black-hole-solver";
   version = "1.14.0";
+
+  __structuredAttrs = true;
+  strictDeps = true;
+  enableParallelBuilding = true;
+  doCheck = false; # needs to many perl libs
+
+  outputs = [
+    "out"
+    "dev"
+    "man"
+  ];
 
   src = fetchurl {
     url = "https://fc-solve.shlomifish.org/downloads/fc-solve/black-hole-solver-${finalAttrs.version}.tar.xz";
@@ -32,11 +44,23 @@ stdenv.mkDerivation (finalAttrs: {
     patchShebangs ./scripts
   '';
 
+  passthru = {
+    tests = {
+      pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage.dev;
+        versionCheck = true;
+      };
+    };
+  };
+
   meta = {
     description = "Solver for Solitaire variants Golf, Black Hole, and All in a Row";
     mainProgram = "black-hole-solve";
     homepage = "https://www.shlomifish.org/open-source/projects/black-hole-solitaire-solver/";
     license = lib.licenses.mit;
-    maintainers = [ ];
+    maintainers = with lib.maintainers; [
+      sandarukasa
+    ];
+    pkgConfigModules = [ "libblack-hole-solver" ];
   };
 })
